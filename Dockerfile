@@ -41,35 +41,3 @@ COPY --from=dev-builder /workspace/$BIN_NAME /
 USER 65532:65532
 
 ENTRYPOINT ["/vault-secrets-operator"]
-
-# default release image
-# -----------------------------------
-FROM gcr.io/distroless/static:nonroot as release-default
-
-ENV BIN_NAME=vault-secrets-operator
-ARG PRODUCT_VERSION
-ARG PRODUCT_REVISION
-ARG PRODUCT_NAME=$BIN_NAME
-# TARGETARCH and TARGETOS are set automatically when --platform is provided.
-ARG TARGETOS=linux
-ARG TARGETARCH=arm64
-
-LABEL maintainer="Team Vault <vault@hashicorp.com>"
-LABEL version=$PRODUCT_VERSION
-LABEL revision=$PRODUCT_REVISION
-
-WORKDIR /
-
-COPY dist/$TARGETOS/$TARGETARCH/$BIN_NAME /
-COPY LICENSE /licenses/copyright.txt
-
-USER 65532:65532
-
-ENTRYPOINT ["/vault-secrets-operator"]
-
-# ===================================
-#
-#   Set default target to 'dev'.
-#
-# ===================================
-FROM dev
