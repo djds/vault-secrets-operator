@@ -8,7 +8,7 @@ ARG GO_VERSION=latest
 FROM golang:$GO_VERSION as dev-builder
 
 ARG GOOS=linux
-ARG GOARCH=amd64
+ARG GOARCH=arm64
 ENV BIN_NAME=vault-secrets-operator
 WORKDIR /workspace
 # Copy the Go Modules manifests
@@ -51,7 +51,8 @@ ARG PRODUCT_VERSION
 ARG PRODUCT_REVISION
 ARG PRODUCT_NAME=$BIN_NAME
 # TARGETARCH and TARGETOS are set automatically when --platform is provided.
-ARG TARGETOS TARGETARCH
+ARG TARGETOS=linux
+ARG TARGETARCH=arm64
 
 LABEL maintainer="Team Vault <vault@hashicorp.com>"
 LABEL version=$PRODUCT_VERSION
